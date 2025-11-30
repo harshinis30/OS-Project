@@ -1,3 +1,121 @@
+
+
+# ✅ Custom Syscalls Added to xv6 (MIT RISC-V)
+
+This repository includes two **custom system calls** implemented in xv6:
+
+1. `schedtest` – Scheduler statistics syscall
+2. `psinfo` – Process information syscall
+
+Both syscalls are working and tested.
+
+---
+
+## 1️⃣ `schedtest` — Scheduler Statistics Syscall
+
+### 📌 What it does:
+
+Returns the **total number of context switches** that have occurred since the OS booted.
+
+### ▶️ How to run:
+
+Inside xv6 shell:
+
+```sh
+schedtest
+```
+
+### ✅ Output Example:
+
+```
+Total context switches since boot: 46
+```
+
+### 🎯 Purpose:
+
+* Monitor scheduler activity
+* Study process switching behavior
+* Kernel performance analysis
+
+---
+
+## 2️⃣ `psinfo` — Process Information Syscall
+
+### 📌 What it does:
+
+Prints details of all currently active processes including:
+
+* Process ID (PID)
+* Execution State
+* Program Name
+
+### ▶️ How to run:
+
+Inside xv6 shell:
+
+```sh
+psinfo
+```
+
+### ✅ Output Example:
+
+```
+PID     STATE   NAME
+1       SLEEP   init
+2       SLEEP   sh
+3       RUN     psinfo
+```
+
+### 🧠 State Descriptions:
+
+| State  | Meaning                     |
+| ------ | --------------------------- |
+| RUN    | Currently running           |
+| RUNN   | Runnable, waiting for CPU   |
+| SLEEP  | Waiting for event           |
+| ZOMB   | Terminated, not yet cleaned |
+| UNUSED | Empty process slot          |
+
+### 🎯 Purpose:
+
+* Kernel-level process monitoring
+* Debugging and introspection
+* Understanding OS process states
+
+---
+
+## 🔧 Build & Run Instructions
+
+To compile and run xv6:
+
+### Clean and rebuild:
+
+```bash
+make clean
+make qemu
+```
+
+### Then test:
+
+```sh
+schedtest
+psinfo
+```
+
+---
+
+
+
+If anything breaks, rebuild:
+
+```sh
+make clean
+make qemu
+```
+
+
+
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
