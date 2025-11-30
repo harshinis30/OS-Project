@@ -91,3 +91,11 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+extern uint64 total_context_switches;
+
+uint64
+sys_schedstat(void)
+{
+  return total_context_switches;
+}

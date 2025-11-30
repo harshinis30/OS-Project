@@ -10,6 +10,9 @@ struct cpu cpus[NCPU];
 
 struct proc proc[NPROC];
 
+// Total number of context switches done by the scheduler since boot.
+uint64 total_context_switches = 0;
+
 struct proc *initproc;
 
 int nextpid = 1;
@@ -463,6 +466,8 @@ scheduler(void)
         // before jumping back to us.
         p->state = RUNNING;
         c->proc = p;
+// Count this context switch (scheduler -> process)
+        total_context_switches++;
         swtch(&c->context, &p->context);
 
         // Process is done running for now.
