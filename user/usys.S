@@ -110,3 +110,8 @@ schedstat:
  li a7, SYS_schedstat
  ecall
  ret
+.global psinfo
+psinfo:
+ li a7, SYS_psinfo
+ ecall
+ ret

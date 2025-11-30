@@ -5,6 +5,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+extern struct proc proc[NPROC];
 
 uint64
 sys_exit(void)
@@ -98,4 +99,47 @@ uint64
 sys_schedstat(void)
 {
   return total_context_switches;
+}
+uint64
+sys_psinfo(void)
+{
+  struct proc *p;
+
+  printf("PID\tSTATE\tNAME\n");
+
+  // proc[] is the global process table array
+  for(p = proc; p < &proc[NPROC]; p++){
+    acquire(&p->lock);
+
+    if(p->state != UNUSED){
+      char *state;
+
+      switch(p->state){
+      case UNUSED:
+        state = "UNUSED";
+        break;
+      case SLEEPING:
+        state = "SLEEP";
+        break;
+      case RUNNABLE:
+        state = "RUNN";
+        break;
+      case RUNNING:
+        state = "RUN";
+        break;
+      case ZOMBIE:
+        state = "ZOMB";
+        break;
+      default:
+        state = "???";
+        break;
+      }
+
+      printf("%d\t%s\t%s\n", p->pid, state, p->name);
+    }
+
+    release(&p->lock);
+  }
+
+  return 0;
 }

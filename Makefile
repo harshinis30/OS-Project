@@ -187,9 +187,10 @@ UPROGS=\
 	$U/_ln\
 	$U/_ls\
 	$U/_mkdir\
+	$U/_psinfo\
 	$U/_rm\
 	$U/_sh\
-        $U/_schedtest\
+    $U/_schedtest\
 	$U/_stressfs\
 	$U/_usertests\
 	$U/_grind\
