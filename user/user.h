@@ -1,4 +1,5 @@
 struct stat;
+#include "kernel/memstat.h"
 
 // system calls
 int fork(void);
@@ -24,6 +25,7 @@ int sleep(int);
 int uptime(void);
 int schedstat(void);
 int psinfo(void);
+int getmeminfo(int pid, struct memstat *m);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -5,6 +5,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
+#include "memstat.h"
 
 struct spinlock tickslock;
 uint ticks;
@@ -49,6 +50,13 @@ usertrap(void)
   
   // save user program counter.
   p->trapframe->epc = r_sepc();
+  
+  uint64 scause = r_scause();
+  
+  // Count page faults: instruction (12), load (13), store (15)
+  if((scause & 0xff) == 12 || (scause & 0xff) == 13 || (scause & 0xff) == 15) {
+    p->pagefaults++;
+  }
   
   if(r_scause() == 8){
     // system call

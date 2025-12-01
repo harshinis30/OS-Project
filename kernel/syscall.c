@@ -103,6 +103,8 @@ extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
 extern uint64 sys_schedstat(void);
 extern uint64 sys_psinfo(void);
+extern uint64 sys_getmeminfo(void);
+
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -130,6 +132,8 @@ static uint64 (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_schedstat] sys_schedstat,
 [SYS_psinfo]    sys_psinfo,
+[SYS_getmeminfo] sys_getmeminfo,
+
 
 };
 

@@ -115,3 +115,8 @@ psinfo:
  li a7, SYS_psinfo
  ecall
  ret
+.global getmeminfo
+getmeminfo:
+ li a7, SYS_getmeminfo
+ ecall
+ ret

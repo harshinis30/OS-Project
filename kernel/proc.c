@@ -149,6 +149,14 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  // Initializing memory statistics
+  p->sz = 0;
+  p->code_size = 0;
+  p->heap_size = 0;
+  p->stack_size = 0;
+  p->pagefaults = 0;
+
+
   return p;
 }
 
@@ -298,6 +306,13 @@ fork(void)
     return -1;
   }
   np->sz = p->sz;
+  
+  // Copying memory statistics from parent to child.
+  np->code_size   = p->code_size;
+  np->heap_size   = p->heap_size;
+  np->stack_size  = p->stack_size;
+  np->pagefaults  = p->pagefaults;
+
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);

@@ -5,6 +5,8 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "memstat.h"
+
 extern struct proc proc[NPROC];
 
 uint64
@@ -39,15 +41,32 @@ sys_wait(void)
 uint64
 sys_sbrk(void)
 {
-  uint64 addr;
+  int addr;
   int n;
+  struct proc *p = myproc();
 
+  // argint is void in this repo; just call it.
   argint(0, &n);
-  addr = myproc()->sz;
+
+  addr = p->sz;
+
   if(growproc(n) < 0)
     return -1;
+
+  // Update heap size statistics.
+  if(n > 0) {
+    p->heap_size += (uint64)n;
+  } else if(n < 0) {
+    uint64 dec = (uint64)(-n);
+    if(p->heap_size >= dec)
+      p->heap_size -= dec;
+    else
+      p->heap_size = 0;
+  }
+
   return addr;
 }
+
 
 uint64
 sys_sleep(void)
@@ -143,3 +162,45 @@ sys_psinfo(void)
 
   return 0;
 }
+
+uint64
+sys_getmeminfo(void)
+{
+  int pid;
+  uint64 uaddr;                 // user-space pointer to struct memstat
+  struct proc *cur = myproc();
+  struct memstat m;
+  struct proc *p;
+
+  // argint/argaddr are void; just call them.
+  argint(0, &pid);
+  argaddr(1, &uaddr);
+
+  // Find target process (similar to kill()).
+  for(p = proc; p < &proc[NPROC]; p++) {
+    acquire(&p->lock);
+    if(p->pid == pid && p->state != UNUSED) {
+      // Fill memstat from this process
+      m.code_size   = p->code_size;
+      m.heap_size   = p->heap_size;
+      m.stack_size  = p->stack_size;
+      m.total_pages = p->sz / PGSIZE;
+      m.pagefaults  = p->pagefaults;
+      release(&p->lock);
+      goto found;
+    }
+    release(&p->lock);
+  }
+
+  // No such process
+  return -1;
+
+found:
+  // Copy struct memstat to user space of the *current* process
+  if(copyout(cur->pagetable, uaddr, (char *)&m, sizeof(m)) < 0)
+    return -1;
+
+  return 0;
+}
+
+

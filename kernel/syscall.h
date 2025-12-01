@@ -22,3 +22,4 @@
 #define SYS_close  21
 #define SYS_schedstat 22
 #define SYS_psinfo 23
+#define SYS_getmeminfo 24

@@ -6,6 +6,7 @@
 #include "proc.h"
 #include "defs.h"
 #include "elf.h"
+#include "memstat.h"
 
 static int loadseg(pde_t *, uint64, struct inode *, uint, uint);
 
@@ -124,6 +125,15 @@ exec(char *path, char **argv)
   oldpagetable = p->pagetable;
   p->pagetable = pagetable;
   p->sz = sz;
+  
+  // Setting memory statistics after successful exec.
+  // At this point, sz includes code+data+bss + guard page + stack page.
+  p->code_size = sz - 2*PGSIZE;  // subtract guard + stack
+  p->heap_size = 0;              // heap starts empty
+  p->stack_size = PGSIZE;        // one usable stack page
+  p->pagefaults = 0;             // reset on exec
+
+  
   p->trapframe->epc = elf.entry;  // initial program counter = main
   p->trapframe->sp = sp; // initial stack pointer
   proc_freepagetable(oldpagetable, oldsz);

@@ -1,3 +1,5 @@
+#include "memstat.h"
+
 // Saved registers for kernel context switches.
 struct context {
   uint64 ra;
@@ -98,6 +100,13 @@ struct proc {
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // Virtual address of kernel stack
   uint64 sz;                   // Size of process memory (bytes)
+  
+  //  Additions: memory statistics
+  uint64 code_size;            // code+data+bss size (bytes)
+  uint64 heap_size;            // heap size (bytes; from sbrk)
+  uint64 stack_size;           // stack size in bytes
+  uint64 pagefaults;           // number of page faults for this process
+  
   pagetable_t pagetable;       // User page table
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
