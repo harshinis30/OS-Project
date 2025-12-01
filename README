@@ -7,7 +7,7 @@ This repository contains the implementation of two custom **system calls** added
 
 * `schedtest` — Scheduler Statistics Syscall
 * `psinfo` — Process Information Syscall
-
+* `getmeminfo` - Syscall that returns memory usage per process
 Both syscalls are implemented at the kernel level, exported to user space, and tested successfully in QEMU.
 
 ---
