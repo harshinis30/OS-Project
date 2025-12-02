@@ -1,4 +1,4 @@
-# Custom Syscalls in xv6 (MIT RISC-V)
+#  Custom Syscalls in xv6 (MIT RISC-V)
 
 This repository contains the implementation of **5 custom system calls** added to the MIT xv6 (RISC-V) operating system to extend its process management and diagnostic capabilities.
 
@@ -91,7 +91,7 @@ Reports the count of processes currently in key states, specifically **RUNNING**
 
 ---
 
-##  Build & Run
+## Build & Run
 
 Use the following commands to clean the environment, build the project, and start the xv6 operating system in QEMU.
 
@@ -126,3 +126,4 @@ make TOOLPREFIX=riscv64-linux-gnu- qemu
   * **Do not** modify the assigned syscall numbers unless absolutely necessary to avoid conflicts.
   * Always run `make clean` before rebuilding after pulling updates or making kernel changes.
   * Missing registration in `kernel/syscall.c` or `user/usys.pl` is a common error that can cause xv6 to freeze at boot.
+
