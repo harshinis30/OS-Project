@@ -1,8 +1,3 @@
-
-
-
-
-````markdown
 # ⚙️ Custom Syscalls in xv6 (MIT RISC-V)
 
 This repository contains the implementation of **5 custom system calls** added to the MIT xv6 (RISC-V) operating system to extend its process management and diagnostic capabilities.
@@ -103,7 +98,6 @@ Use the following commands to clean the environment, build the project, and star
 ```bash
 make clean
 make qemu
-````
 
 If you are using an explicit RISC-V toolchain, use these commands:
 
