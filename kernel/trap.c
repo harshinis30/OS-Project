@@ -7,6 +7,8 @@
 #include "defs.h"
 #include "memstat.h"
 
+extern void updatestats(void);
+
 struct spinlock tickslock;
 uint ticks;
 
@@ -176,6 +178,8 @@ clockintr()
     ticks++;
     wakeup(&ticks);
     release(&tickslock);
+    updatestats();
+
   }
 
   // ask for the next timer interrupt. this also clears
@@ -223,4 +227,5 @@ devintr()
     return 0;
   }
 }
+
 

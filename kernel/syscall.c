@@ -105,6 +105,7 @@ extern uint64 sys_schedstat(void);
 extern uint64 sys_psinfo(void);
 extern uint64 sys_getmeminfo(void);
 extern uint64 sys_setpriority(void);
+extern uint64 sys_getprocstate(void);
 
 
 // An array mapping syscall numbers from syscall.h
@@ -135,6 +136,7 @@ static uint64 (*syscalls[])(void) = {
 [SYS_psinfo]    sys_psinfo,
 [SYS_getmeminfo] sys_getmeminfo,
 [SYS_setpriority] sys_setpriority,
+[SYS_getprocstate] sys_getprocstate,
 
 
 };

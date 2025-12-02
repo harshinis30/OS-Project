@@ -125,3 +125,8 @@ setpriority:
  li a7, SYS_setpriority
  ecall
  ret
+.global getprocstate
+getprocstate:
+ li a7, SYS_getprocstate
+ ecall
+ ret

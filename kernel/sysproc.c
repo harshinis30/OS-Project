@@ -6,7 +6,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "memstat.h"
-
+#include "procstate.h"
 extern struct proc proc[NPROC];
 
 uint64
@@ -228,3 +228,39 @@ sys_setpriority(void)
 }
 
 
+uint64
+sys_getprocstate(void)
+{
+  int pid;
+  uint64 uaddr;
+  struct proc *p;
+  struct procstate_info info;
+  int found = 0;
+
+  // argint / argaddr are void in your xv6, just call them
+  argint(0, &pid);
+  argaddr(1, &uaddr);
+
+  for(p = proc; p < &proc[NPROC]; p++){
+    acquire(&p->lock);
+    if(p->pid == pid && p->state != UNUSED){
+      info.pid            = p->pid;
+      info.running_ticks  = p->running_ticks;
+      info.runnable_ticks = p->runnable_ticks;
+      info.sleeping_ticks = p->sleeping_ticks;
+      found = 1;
+      release(&p->lock);
+      break;
+    }
+    release(&p->lock);
+  }
+
+  if(!found)
+    return -1;
+
+  struct proc *cp = myproc();
+  if(copyout(cp->pagetable, uaddr, (char *)&info, sizeof(info)) < 0)
+    return -1;
+
+  return 0;
+}

@@ -24,3 +24,4 @@
 #define SYS_psinfo 23
 #define SYS_getmeminfo 24
 #define SYS_setpriority 25
+#define SYS_getprocstate 26

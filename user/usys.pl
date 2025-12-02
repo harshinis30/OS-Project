@@ -40,3 +40,4 @@ entry("schedstat");
 entry("psinfo");
 entry("getmeminfo");
 entry("setpriority");
+entry("getprocstate");

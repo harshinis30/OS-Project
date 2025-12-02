@@ -27,7 +27,8 @@ int schedstat(void);
 int psinfo(void);
 int getmeminfo(int pid, struct memstat *m);
 int setpriority(int pid, int new_priority);
-
+struct procstate_info;   // forward declaration (or include "procstate.h")
+int getprocstate(int pid, struct procstate_info *info);
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);

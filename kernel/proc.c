@@ -155,6 +155,9 @@ found:
   p->heap_size = 0;
   p->stack_size = 0;
   p->pagefaults = 0;
+  p->running_ticks  = 0;
+  p->runnable_ticks = 0;
+  p->sleeping_ticks = 0;
 
   // Initialize priority to default value (lower number = higher priority)
   p->priority = 10;
@@ -733,5 +736,28 @@ procdump(void)
       state = "???";
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
+  }
+}
+void
+updatestats(void)
+{
+  struct proc *p;
+
+  for(p = proc; p < &proc[NPROC]; p++) {
+    acquire(&p->lock);
+    switch(p->state) {
+    case RUNNING:
+      p->running_ticks++;
+      break;
+    case RUNNABLE:
+      p->runnable_ticks++;
+      break;
+    case SLEEPING:
+      p->sleeping_ticks++;
+      break;
+    default:
+      break;
+    }
+    release(&p->lock);
   }
 }

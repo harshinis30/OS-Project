@@ -107,7 +107,11 @@ struct proc {
   uint64 heap_size;            // heap size (bytes; from sbrk)
   uint64 stack_size;           // stack size in bytes
   uint64 pagefaults;           // number of page faults for this process
-  
+    // Runtime state statistics (in timer ticks)
+  uint64 running_ticks;    // RUNNING state time
+  uint64 runnable_ticks;   // RUNNABLE state time
+  uint64 sleeping_ticks;   // SLEEPING state time
+
   pagetable_t pagetable;       // User page table
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
