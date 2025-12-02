@@ -41,7 +41,7 @@ Displays a list of all active processes, including their **Process ID (PID)**, *
 
 ---
 
-### 3. `getmeminfo` — Memory Usage Information
+### 3. `memtest` — Memory Usage Information
 
 Returns comprehensive memory usage statistics for the calling process, including **code size**, **heap size**, **stack size**, **pages allocated**, and **page faults**.
 
@@ -72,13 +72,13 @@ Modifies the execution priority of a specific process. The scheduler is modified
 
 ---
 
-### 5. `getprocstatetest` — Process State Statistics
+### 5. `procstatetest` — Process State Statistics
 
 Reports the count of processes currently in key states, specifically **RUNNING**, **RUNNABLE**, and **SLEEPING**. Used to confirm correct real-time tracking of process state transitions.
 
 * **Usage:**
     ```sh
-    getprocstatetest
+    procstatetest 2
     ```
 * **Example Output:**
     ```
