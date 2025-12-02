@@ -67,7 +67,13 @@ Modifies the execution priority of a specific process. The scheduler is modified
     setpriority 2 10   # Default priority
     setpriority 2 20   # Lowest priority
     ```
-* **Test Programs:** `testpriority`, `prioritytest`
+* **Test Programs:** 
+```sh
+   testpriority
+
+   prioritytest
+ ```
+
 * **Key Files Changed:** `kernel/sysproc.c`, `kernel/proc.c` (scheduler modification, priority in `allocproc` and `fork`), `kernel/proc.h`, `user/setpriority.c`, `user/testpriority.c`, `user/prioritytest.c`, `kernel/syscall.h`, `kernel/syscall.c`, `user/user.h`, `user/usys.pl`, `Makefile`
 
 ---
@@ -78,7 +84,7 @@ Reports the count of processes currently in key states, specifically **RUNNING**
 
 * **Usage:**
     ```sh
-    procstatetest 2
+    procstatetest <pid>
     ```
 * **Example Output:**
     ```
