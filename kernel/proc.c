@@ -156,6 +156,8 @@ found:
   p->stack_size = 0;
   p->pagefaults = 0;
 
+  // Initialize priority to default value (lower number = higher priority)
+  p->priority = 10;
 
   return p;
 }
@@ -312,6 +314,9 @@ fork(void)
   np->heap_size   = p->heap_size;
   np->stack_size  = p->stack_size;
   np->pagefaults  = p->pagefaults;
+  
+  // Copy priority from parent to child
+  np->priority = p->priority;
 
 
   // copy saved user registers.
@@ -472,25 +477,42 @@ scheduler(void)
     // processes are waiting.
     intr_on();
 
+    // Find the process with highest priority (lowest priority number)
+    struct proc *chosen = 0;
     int found = 0;
+    
+    // First pass: find the process with the lowest priority number
     for(p = proc; p < &proc[NPROC]; p++) {
       acquire(&p->lock);
       if(p->state == RUNNABLE) {
-        // Switch to chosen process.  It is the process's job
-        // to release its lock and then reacquire it
-        // before jumping back to us.
-        p->state = RUNNING;
-        c->proc = p;
-// Count this context switch (scheduler -> process)
-        total_context_switches++;
-        swtch(&c->context, &p->context);
-
-        // Process is done running for now.
-        // It should have changed its p->state before coming back.
-        c->proc = 0;
-        found = 1;
+        if(chosen == 0 || p->priority < chosen->priority) {
+          // Release the lock of the previously chosen process
+          if(chosen != 0) {
+            release(&chosen->lock);
+          }
+          chosen = p;
+          found = 1;
+        } else {
+          release(&p->lock);
+        }
+      } else {
+        release(&p->lock);
       }
-      release(&p->lock);
+    }
+    
+    // Second pass: run the chosen process
+    if(found && chosen != 0) {
+      // chosen->lock is already held
+      chosen->state = RUNNING;
+      c->proc = chosen;
+      // Count this context switch (scheduler -> process)
+      total_context_switches++;
+      swtch(&c->context, &chosen->context);
+
+      // Process is done running for now.
+      // It should have changed its p->state before coming back.
+      c->proc = 0;
+      release(&chosen->lock);
     }
     if(found == 0) {
       // nothing to run; stop running on this core until an interrupt.

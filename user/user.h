@@ -26,6 +26,7 @@ int uptime(void);
 int schedstat(void);
 int psinfo(void);
 int getmeminfo(int pid, struct memstat *m);
+int setpriority(int pid, int new_priority);
 
 // ulib.c
 int stat(const char*, struct stat*);

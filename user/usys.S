@@ -120,3 +120,8 @@ getmeminfo:
  li a7, SYS_getmeminfo
  ecall
  ret
+.global setpriority
+setpriority:
+ li a7, SYS_setpriority
+ ecall
+ ret

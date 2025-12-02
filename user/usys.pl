@@ -39,3 +39,4 @@ entry("uptime");
 entry("schedstat");
 entry("psinfo");
 entry("getmeminfo");
+entry("setpriority");

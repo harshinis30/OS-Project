@@ -23,3 +23,4 @@
 #define SYS_schedstat 22
 #define SYS_psinfo 23
 #define SYS_getmeminfo 24
+#define SYS_setpriority 25

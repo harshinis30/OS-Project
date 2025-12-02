@@ -203,4 +203,28 @@ found:
   return 0;
 }
 
+uint64
+sys_setpriority(void)
+{
+  int pid, new_priority;
+  struct proc *p;
+  argint(0,&pid);
+  argint(1,&new_priority);
+  // Validate priority (should be non-negative)
+  if(new_priority<0)
+    return -1;
+  // Find the process with the given pid
+  for(p=proc;p<&proc[NPROC];p++) {
+    acquire(&p->lock);
+    if(p->pid==pid && p->state!=UNUSED) {
+      p->priority=new_priority;
+      release(&p->lock);
+      return 0;
+    }
+    release(&p->lock);
+  }
+  // Process not found
+  return -1;
+}
+
 
