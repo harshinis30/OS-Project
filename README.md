@@ -2,10 +2,10 @@
 
 This repository contains the implementation of 4 custom **system calls** added to the MIT xv6 (RISC-V) operating system:
 
-* `schedtest` — Scheduler Statistics
-* `psinfo` — Process Information
-* `getmeminfo` — Memory Usage Information
-* `setpriority` — Priority-Based Scheduling
+-   `schedtest` — Scheduler Statistics
+-   `psinfo` — Process Information
+-   `getmeminfo` — Memory Usage Information
+-   `setpriority` — Priority-Based Scheduling
 
 ---
 
@@ -29,13 +29,13 @@ Total context switches since boot: 46
 
 **Files changed:**
 
-- `kernel/syscall.h` — Added `SYS_schedstat` (22)
-- `kernel/syscall.c` — Registered `sys_schedstat` in array
-- `kernel/sysproc.c` — Implemented `sys_schedstat()`
-- `user/user.h` — Added `schedstat()` declaration
-- `user/usys.pl` — Added `schedstat` entry
-- `user/schedtest.c` — User program
-- `Makefile` — Added `_schedtest` to `UPROGS`
+-   `kernel/syscall.h` — Added `SYS_schedstat` (22)
+-   `kernel/syscall.c` — Registered `sys_schedstat` in array
+-   `kernel/sysproc.c` — Implemented `sys_schedstat()`
+-   `user/user.h` — Added `schedstat()` declaration
+-   `user/usys.pl` — Added `schedstat` entry
+-   `user/schedtest.c` — User program
+-   `Makefile` — Added `_schedtest` to `UPROGS`
 
 ---
 
@@ -60,13 +60,13 @@ PID     STATE   NAME
 
 **Files changed:**
 
-- `kernel/syscall.h` — Added `SYS_psinfo` (23)
-- `kernel/syscall.c` — Registered `sys_psinfo` in array
-- `kernel/sysproc.c` — Implemented `sys_psinfo()`
-- `user/user.h` — Added `psinfo()` declaration
-- `user/usys.pl` — Added `psinfo` entry
-- `user/psinfo.c` — User program
-- `Makefile` — Added `_psinfo` to `UPROGS`
+-   `kernel/syscall.h` — Added `SYS_psinfo` (23)
+-   `kernel/syscall.c` — Registered `sys_psinfo` in array
+-   `kernel/sysproc.c` — Implemented `sys_psinfo()`
+-   `user/user.h` — Added `psinfo()` declaration
+-   `user/usys.pl` — Added `psinfo` entry
+-   `user/psinfo.c` — User program
+-   `Makefile` — Added `_psinfo` to `UPROGS`
 
 ---
 
@@ -82,16 +82,16 @@ memtest
 
 **Files changed:**
 
-- `kernel/syscall.h` — Added `SYS_getmeminfo` (24)
-- `kernel/syscall.c` — Registered `sys_getmeminfo` in array
-- `kernel/sysproc.c` — Implemented `sys_getmeminfo()`
-- `kernel/proc.c` — Added memory statistics tracking (code_size, heap_size, stack_size, pagefaults)
-- `kernel/proc.h` — Added memory statistics fields to process structure
-- `kernel/memstat.h` — Memory statistics structure definition
-- `user/user.h` — Added `getmeminfo()` declaration
-- `user/usys.pl` — Added `getmeminfo` entry
-- `user/memtest.c` — Test program
-- `Makefile` — Added `_memtest` to `UPROGS`
+-   `kernel/syscall.h` — Added `SYS_getmeminfo` (24)
+-   `kernel/syscall.c` — Registered `sys_getmeminfo` in array
+-   `kernel/sysproc.c` — Implemented `sys_getmeminfo()`
+-   `kernel/proc.c` — Added memory statistics tracking (code_size, heap_size, stack_size, pagefaults)
+-   `kernel/proc.h` — Added memory statistics fields to process structure
+-   `kernel/memstat.h` — Memory statistics structure definition
+-   `user/user.h` — Added `getmeminfo()` declaration
+-   `user/usys.pl` — Added `getmeminfo` entry
+-   `user/memtest.c` — Test program
+-   `Makefile` — Added `_memtest` to `UPROGS`
 
 ---
 
@@ -122,17 +122,17 @@ prioritytest        # Demo with multiple processes
 
 **Files changed:**
 
-- `kernel/syscall.h` — Added `SYS_setpriority` (25)
-- `kernel/syscall.c` — Registered `sys_setpriority` in array
-- `kernel/sysproc.c` — Implemented `sys_setpriority()`
-- `kernel/proc.c` — Modified scheduler for priority-based scheduling, initialize priority in `allocproc()`, priority inheritance in `fork()`
-- `kernel/proc.h` — Added `priority` field to process structure
-- `user/user.h` — Added `setpriority()` declaration
-- `user/usys.pl` — Added `setpriority` entry
-- `user/setpriority.c` — User program
-- `user/testpriority.c` — Test program
-- `user/prioritytest.c` — Demo program
-- `Makefile` — Added `_setpriority`, `_testpriority`, `_prioritytest` to `UPROGS`
+-   `kernel/syscall.h` — Added `SYS_setpriority` (25)
+-   `kernel/syscall.c` — Registered `sys_setpriority` in array
+-   `kernel/sysproc.c` — Implemented `sys_setpriority()`
+-   `kernel/proc.c` — Modified scheduler for priority-based scheduling, initialize priority in `allocproc()`, priority inheritance in `fork()`
+-   `kernel/proc.h` — Added `priority` field to process structure
+-   `user/user.h` — Added `setpriority()` declaration
+-   `user/usys.pl` — Added `setpriority` entry
+-   `user/setpriority.c` — User program
+-   `user/testpriority.c` — Test program
+-   `user/prioritytest.c` — Demo program
+-   `Makefile` — Added `_setpriority`, `_testpriority`, `_prioritytest` to `UPROGS`
 
 ---
 
@@ -160,9 +160,8 @@ make qemu TOOLPREFIX=riscv64-linux-gnu-
 
 ## ⚠ Notes
 
-- Do **not** modify syscall numbers unless strictly required
-- Always run `make clean` after pulling updates
-- Missing registration in `syscall.c` or `usys.pl` may cause xv6 to freeze at boot
+-   Do **not** modify syscall numbers unless strictly required
+-   Always run `make clean` after pulling updates
+-   Missing registration in `syscall.c` or `usys.pl` may cause xv6 to freeze at boot
 
 ---
-
