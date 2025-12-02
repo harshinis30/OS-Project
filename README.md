@@ -76,16 +76,6 @@ PID     STATE   NAME
 
 **How to run:**
 
-```c
-#include "kernel/memstat.h"
-#include "user/user.h"
-
-struct memstat m;
-getmeminfo(pid, &m);
-```
-
-**Test program:**
-
 ```sh
 memtest
 ```
