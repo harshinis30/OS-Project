@@ -1,10 +1,10 @@
-# ⚙️ Custom Syscalls in xv6 (MIT RISC-V)
+#  Custom Syscalls in xv6 (MIT RISC-V)
 
 This repository contains the implementation of **5 custom system calls** added to the MIT xv6 (RISC-V) operating system to extend its process management and diagnostic capabilities.
 
 ---
 
-## ✅ Implemented Syscalls
+## Implemented Syscalls
 
 ### 1. `schedtest` — Scheduler Statistics
 
@@ -91,7 +91,7 @@ Reports the count of processes currently in key states, specifically **RUNNING**
 
 ---
 
-## 🛠️ Build & Run
+## Build & Run
 
 Use the following commands to clean the environment, build the project, and start the xv6 operating system in QEMU.
 
@@ -109,7 +109,7 @@ make TOOLPREFIX=riscv64-linux-gnu- qemu
 
 -----
 
-## ✅ Implementation Status
+## Implementation Status
 
 | Component          | Status |
 | :----------------- | :----- |
